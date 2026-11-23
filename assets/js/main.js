@@ -28,24 +28,151 @@
     if (inp.checked) elegir(inp.value);
   });
 
-  /* ── Tienda: la foto cambia con el equipo señalado ── */
-  var tImg = $('#tienda-img'), tTimer;
-  function mostrar(a) {
-    var src = a.getAttribute('data-img');
-    if (!tImg || !src || tImg.getAttribute('src') === src) return;
-    clearTimeout(tTimer);
-    tImg.classList.add('is-out');
-    tTimer = setTimeout(function () {
-      tImg.onload = function () { tImg.classList.remove('is-out'); };
-      tImg.src = src;
-      tImg.alt = 'Globus ' + ($('.tienda__n', a) || a).textContent;
-      if (tImg.complete) tImg.classList.remove('is-out');
-    }, 180);
-  }
-  $$('.tienda__grupo a').forEach(function (a) {
-    a.addEventListener('mouseenter', function () { mostrar(a); });
-    a.addEventListener('focus', function () { mostrar(a); });
-  });
+  /* ── Medir: la frase sigue a la película y la película sigue a la frase ── */
+  (function () {
+    var video = $('#film video'), tomas = $$('.toma'), pie = $('#film-pie');
+    if (!video || !tomas.length) return;
+    var inicios = [0, 3.68, 6.84, 10.6], actual = 0;
+    var textos = [
+      'Captura de movimiento Xsens: el cuerpo y su doble digital, al mismo tiempo.',
+      'Sensor en la barra: fuerza y velocidad de cada repetición.',
+      'Ergoespirometría Cortex: el oxígeno de cada respiración.',
+      'Seguimiento ocular Tobii: hacia dónde mira una persona y por cuánto tiempo.'
+    ];
+    function poner(n) {
+      if (n === actual) return;
+      actual = n;
+      tomas.forEach(function (t, i) { t.classList.toggle('is-on', i === n); t.setAttribute('aria-pressed', i === n ? 'true' : 'false'); });
+      pie.classList.add('is-out');
+      setTimeout(function () { pie.textContent = textos[n]; pie.classList.remove('is-out'); }, 220);
+    }
+    function ver() {
+      var t = video.currentTime + 0.02, n = 0;
+      for (var i = 0; i < inicios.length; i++) if (t >= inicios[i]) n = i;
+      poner(n);
+    }
+    video.addEventListener('timeupdate', ver);
+    video.addEventListener('seeked', ver);
+    function saltar(n) {
+      try { video.currentTime = inicios[n] + 0.05; } catch (e) { /* todavía sin datos */ }
+      if (!reduce) { var p = video.play(); if (p && p.catch) p.catch(function () {}); }
+    }
+    function ir(n) {
+      var fin = video.seekable.length ? video.seekable.end(video.seekable.length - 1) : 0;
+      poner(n);
+      if (fin > inicios[n] || n === 0) { saltar(n); return; }
+      /* El servidor no permite saltar dentro del video: se descarga entero una sola vez */
+      var src = $('source', video).getAttribute('src');
+      fetch(src).then(function (r) { return r.blob(); }).then(function (b) {
+        video.addEventListener('loadeddata', function () { saltar(n); }, { once: true });
+        video.src = URL.createObjectURL(b);
+      }).catch(function () {});
+    }
+    tomas.forEach(function (t, i) {
+      t.setAttribute('role', 'button'); t.setAttribute('tabindex', '0'); t.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
+      t.addEventListener('click', function () { ir(i); });
+      t.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ir(i); } });
+    });
+  })();
+
+  /* ── Catálogo: cada fila cambia la imagen grande ── */
+  (function () {
+    var marco = $('#lineas-marco'), pie = $('#lineas-pie');
+    if (!marco || !pie) return;
+    var base = pie.textContent, fotos = {}, actual = null, volver;
+    function poner(a) {
+      clearTimeout(volver);
+      var src = a && a.getAttribute('data-img');
+      if (src && !fotos[src]) {
+        var im = new Image();
+        im.alt = ''; im.decoding = 'async'; im.src = src;
+        marco.appendChild(im); fotos[src] = im;
+        void im.offsetWidth;
+      }
+      if (src === actual) return;
+      if (actual && fotos[actual]) fotos[actual].classList.remove('is-on');
+      actual = src || null;
+      if (actual) fotos[actual].classList.add('is-on');
+      pie.textContent = (src && a.getAttribute('data-pie')) || base;
+    }
+    $$('.lineas__tabla a').forEach(function (a) {
+      a.addEventListener('mouseenter', function () { poner(a); });
+      a.addEventListener('focus', function () { poner(a); });
+      a.addEventListener('blur', function () { poner(null); });
+    });
+    $('.lineas__tabla').addEventListener('mouseleave', function () { volver = setTimeout(function () { poner(null); }, 260); });
+  })();
+
+  /* ── Tienda: cada equipo en 3D junto a su fila ── */
+  (function () {
+    var caja = $('#visor-caja'), filas = $$('.tienda__grupo a[data-m]'), lista = $('.tienda__lista');
+    if (!caja || !filas.length) return;
+    var orden = filas.map(function (a) { return a.getAttribute('data-m'); });
+    var poster = $('.visor__poster', caja), nom = $('#visor-n'), pre = $('#visor-p');
+    var visor = null, actual = null, encima = false, plano = null;
+    function nombre(a) { return $('.tienda__n', a).textContent; }
+    function marcar(a) {
+      if (!a || a === actual) return;
+      if (actual) actual.classList.remove('is-on');
+      actual = a; a.classList.add('is-on');
+      nom.textContent = nombre(a); pre.textContent = '$' + $('.tienda__p', a).textContent;
+      caja.setAttribute('aria-label', 'Modelo 3D del equipo ' + nombre(a));
+      var k = a.getAttribute('data-m'), i = orden.indexOf(k);
+      if (visor) {
+        visor.mostrar(k);
+        [i + 1, i - 1, i + 2].forEach(function (j) { if (orden[j]) visor.precargar(orden[j]); });
+      } else if (plano) plano(k);
+    }
+    function porPosicion() {
+      if (encima) return;
+      var r = lista.getBoundingClientRect(), vh = window.innerHeight;
+      if (r.bottom < 0 || r.top > vh) return;
+      /* La marca baja con el recorrido: primera fila al entrar, última al llegar al final */
+      var techo = desktop.matches ? nav.offsetHeight : nav.offsetHeight + caja.parentNode.offsetHeight, alto = vh - techo;
+      var av = Math.min(1, Math.max(0, (techo - r.top) / Math.max(1, r.height - alto)));
+      var y = techo + alto * (0.06 + 0.9 * av);
+      var mejor = filas[0], d = 1e9;
+      filas.forEach(function (a) { var q = a.getBoundingClientRect(), e = Math.abs((q.top + q.bottom) / 2 - y); if (e < d) { d = e; mejor = a; } });
+      marcar(mejor);
+    }
+    var pend = false;
+    window.addEventListener('scroll', function () { if (pend) return; pend = true; requestAnimationFrame(function () { pend = false; porPosicion(); }); }, { passive: true });
+    filas.forEach(function (a) {
+      a.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') { encima = true; marcar(a); } });
+      a.addEventListener('focus', function () { marcar(a); });
+    });
+    lista.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') encima = false; });
+    actual = null; marcar(filas[0]);
+
+    /* Sin WebGL: el recorte plano del equipo sobre el cuadrado azul */
+    function sin3d() {
+      fetch('assets/3d/modelos.json?v=2').then(function (r) { return r.json(); }).then(function (d) {
+        caja.classList.add('is-plano');
+        plano = function (k) {
+          var e = d.equipos[k]; if (!e) return;
+          poster.style.clipPath = 'polygon(' + e.c.map(function (p) { return (p[0] * 100).toFixed(2) + '% ' + (p[1] * 100).toFixed(2) + '%'; }).join(',') + ')';
+          poster.src = 'assets/3d/' + k + '.webp';
+        };
+        plano(actual.getAttribute('data-m'));
+      }).catch(function () {});
+    }
+    function cargar() {
+      var sc = document.createElement('script');
+      sc.src = 'assets/js/tienda3d.js?v=2'; sc.async = true;
+      sc.onload = function () {
+        visor = window.Tienda3D && window.Tienda3D.montar(caja, { base: 'assets/3d/', orden: orden, v: 2 });
+        if (!visor) { sin3d(); return; }
+        var k = actual.getAttribute('data-m'); visor.mostrar(k);
+        var i = orden.indexOf(k); if (orden[i + 1]) visor.precargar(orden[i + 1]);
+      };
+      sc.onerror = sin3d;
+      document.head.appendChild(sc);
+    }
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); cargar(); } }, { rootMargin: '1200px 0px' });
+      io.observe($('#tienda'));
+    } else cargar();
+  })();
 
   /* ── Videos: solo se reproducen a la vista ── */
   var heroVideo = $('.hero__video');
@@ -175,10 +302,16 @@
   gsap.to('.intro__small', { yPercent: -18, ease: 'none', scrollTrigger: { trigger: '.intro__small', start: 'top bottom', end: 'bottom top', scrub: true } });
 
   /* Medir */
-  entrar('.slot', { scaleX: 0, transformOrigin: 'left center' }, { trigger: '.palabras', duration: 0.9, stagger: 0.12, start: 'top 80%' });
+  ScrollTrigger.matchMedia({
+    '(min-width: 801px)': function () {
+      gsap.fromTo('.film__cuadro', { clipPath: 'inset(0% 16% 0% 16%)' }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'none', scrollTrigger: { trigger: '.film', start: 'top 92%', end: 'top 24%', scrub: true } });
+      gsap.fromTo('.film video', { scale: 1.12 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '.film', start: 'top bottom', end: 'bottom 40%', scrub: true } });
+    }
+  });
   entrar('.selector__panel', { opacity: 0, y: 40 }, { start: 'top 88%' });
 
   /* Líneas del catálogo */
+  entrar('.lineas__media', { clipPath: 'inset(0% 100% 0% 0%)' }, { trigger: '.lineas', duration: 1.2, start: 'top 72%' });
   entrar('.lineas__tabla li', { opacity: 0, x: 30 }, { trigger: '.lineas__tabla', duration: 0.7, stagger: 0.045, start: 'top 84%' });
 
   /* ── Analizar: la misma foto a tres distancias ── */
@@ -203,8 +336,9 @@
     entrar('.analizar__frame', { clipPath: 'inset(0% 0% 100% 0%)' }, { trigger: '.analizar', duration: 1.2, start: 'top 55%' });
   })();
 
-  /* ── Proyectos: nombres y banda que cruza ── */
-  entrar('.nombres', { opacity: 0, y: 40 }, { duration: 1.1 });
+  /* ── Proyectos: el muro de clientes y la banda que cruza ── */
+  entrar('.confian__title', { opacity: 0, y: 40 }, { duration: 1 });
+  entrar('.confian__muro li', { opacity: 0, y: 22 }, { trigger: '.confian__muro', duration: 0.7, stagger: 0.028, start: 'top 88%' });
   ScrollTrigger.matchMedia({
     '(min-width: 801px)': function () {
       var pista = $('.banda__pista');
@@ -228,7 +362,8 @@
   entrar('.cifras__title span', { yPercent: 60, opacity: 0 }, { trigger: '.cifras__title', stagger: 0.1 });
 
   /* Tienda */
-  entrar('.tienda__lado > *', { opacity: 0, y: 30 }, { trigger: '.tienda__lado', duration: 0.9, stagger: 0.1 });
+  entrar('.tienda__cab > *', { opacity: 0, y: 30 }, { trigger: '.tienda__cab', duration: 0.9, stagger: 0.1 });
+  entrar('.visor', { opacity: 0 }, { duration: 0.9 });
   $$('.tienda__grupo').forEach(function (g) { entrar(g, { opacity: 0, y: 36 }, { duration: 0.9 }); });
 
   /* ── Transformar: la escalera ── */
