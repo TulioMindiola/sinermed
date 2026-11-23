@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="es-CO" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tu pedido · Tienda Sinermed</title>
+<meta name="description" content="Revisa tu pedido y paga en línea con Wompi.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#061624">
+<link rel="icon" href="../../assets/img/favicon.png">
+<link rel="preload" href="../../assets/fonts/schibsted-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/css/styles.css?v=4">
+<link rel="stylesheet" href="../../assets/css/tienda.css?v=11">
+<script>document.documentElement.className = 'js'; window.__sinAnim = setTimeout(function () { document.documentElement.classList.add('sin-anim'); }, 4000);</script>
+</head>
+<body class="t">
+<a class="skip" href="#contenido">Saltar al contenido</a>
+
+<header class="nav is-solid">
+  <a class="nav__logo" href="../../index.html" aria-label="Sinermed, inicio"><img src="../../assets/img/logo-blanco.webp" alt="Sinermed" width="720" height="197"></a>
+  <nav aria-label="Tienda">
+    <ul>
+      <li><a href="../../tienda/#deporte">Deporte</a></li>
+      <li><a href="../../tienda/#equipos">Los 20 equipos</a></li>
+      <li><a href="../../tienda/#usos">Usos</a></li>
+      <li><a href="../../tienda/#ayuda">Ayuda</a></li>
+    </ul>
+  </nav>
+  <button class="btn nav__carrito" type="button" data-carrito-abrir aria-haspopup="dialog">Carrito <span class="nav__n" data-carrito-n>0</span></button>
+</header>
+
+<main id="contenido" class="pago paper">
+  <section class="pago__sec" aria-labelledby="h-pago">
+    <h1 id="h-pago">Tu pedido</h1>
+    <p class="pago__lead">Revisa tus equipos y paga en línea con Wompi. Los precios ya incluyen el IVA.</p>
+    <div class="pago__grid">
+      <div class="pago__lista">
+        <ul class="pago__items" data-pago-items data-ui></ul>
+        <p class="pago__vacio" data-pago-vacio>Tu carrito está vacío. <a href="../#equipos">Ver los 20 equipos</a></p>
+      </div>
+      <aside class="pago__resumen" aria-label="Resumen del pedido">
+        <p class="pago__fila"><span>Equipos</span><strong data-pago-n>0</strong></p>
+        <p class="pago__fila pago__fila--total"><span>Total, IVA incluido</span><strong data-pago-total>$0</strong></p>
+        <button class="btn" type="button" data-pagar>Pagar con Wompi</button>
+        <p class="pago__nota">Pasas a la página segura de Wompi para completar el pago. Allí eliges el medio de pago y dejas los datos de envío.</p>
+        <a class="pago__seguir" href="../#equipos">Seguir comprando</a>
+      </aside>
+    </div>
+  </section>
+  <section class="frel pago__sug" aria-labelledby="h-sug">
+    <h2 id="h-sug">Tres para empezar</h2>
+    <ul class="tiles tiles--tres">
+      <li>
+        <a href="../duo-tens/">
+          <span class="tile__campo c1"><img src="../../assets/img/tienda/electroestimulador-duo-tens-obj.webp" alt="" width="741" height="1200" loading="lazy"></span>
+          <strong>Duo Tens</strong>
+          <span class="tile__nota">Para aliviar tensiones del día a día.</span>
+          <span class="tile__precio">$1.084.554</span>
+        </a>
+      </li>
+      <li>
+        <a href="../elite-s2/">
+          <span class="tile__campo c2"><img src="../../assets/img/tienda/elite-s2-obj.webp" alt="" width="754" height="1181" loading="lazy"></span>
+          <strong>Elite S2</strong>
+          <span class="tile__nota">Compacto, con 100 programas.</span>
+          <span class="tile__precio">$1.410.000</span>
+        </a>
+      </li>
+      <li>
+        <a href="../genesy-s2/">
+          <span class="tile__campo c3"><img src="../../assets/img/tienda/electroestimulador-genesy-s2-obj.webp" alt="" width="431" height="726" loading="lazy"></span>
+          <strong>Genesy S2</strong>
+          <span class="tile__nota">60 programas para fisioterapia y deporte.</span>
+          <span class="tile__precio">$1.830.000</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+</main>
+
+<dialog class="aviso" id="aviso-demo" aria-labelledby="aviso-t">
+  <h2 id="aviso-t">Aquí se abre Wompi</h2>
+  <p>Esta es una demostración del diseño. En el sitio definitivo, este botón lleva al pago seguro de Wompi con el total de tu pedido.</p>
+  <form method="dialog"><button class="btn btn--oscuro">Entendido</button></form>
+</dialog>
+
+<footer class="pie paper">
+  <div class="pie__arriba">
+    <p class="pie__inv">¿No sabes<br>cuál elegir?</p>
+    <a class="btn btn--oscuro" href="https://wa.me/573222662454?text=Hola%2C%20Sinermed.%20Quiero%20asesor%C3%ADa%20para%20elegir%20un%20equipo%20de%20la%20tienda." rel="noopener">Pedir asesoría</a>
+    <ul class="pie__redes">
+      <li><a href="../../index.html">Inicio</a></li>
+      <li><a href="../../index.html#catalogo">Catálogo por cotización</a></li>
+      <li><a href="https://www.instagram.com/sinermedcolombia/" rel="noopener">Instagram</a></li>
+      <li><a href="mailto:info@sinermed.com.co">info@sinermed.com.co</a></li>
+    </ul>
+  </div>
+  <div class="pie__creditos">
+    <p>© 2026 Sinermed · Calle 62 # 3-50, Bogotá · Fotos de producto: Globus</p>
+    <p>Propuesta de diseño de <a href="https://impulsapixel.com" rel="noopener">ImpulsaPixel</a></p>
+  </div>
+  <p class="pie__marca" aria-hidden="true">Sinermed</p>
+</footer>
+
+<dialog class="carrito" id="carrito" data-ui aria-labelledby="carrito-t">
+  <div class="carrito__cab">
+    <h2 id="carrito-t" tabindex="-1">Tu carrito</h2>
+    <button class="carrito__cerrar" type="button" data-carrito-cerrar>Cerrar</button>
+  </div>
+  <ul class="carrito__items" data-carrito-items></ul>
+  <p class="carrito__vacio" data-carrito-vacio>Aún no has añadido equipos.</p>
+  <div class="carrito__pie">
+    <p class="carrito__total"><span>Total, IVA incluido</span><strong data-carrito-total>$0</strong></p>
+    <a class="btn" href="../../tienda/carrito/" data-carrito-pagar>Ir a pagar</a>
+    <button class="carrito__seguir" type="button" data-carrito-cerrar>Seguir comprando</button>
+  </div>
+</dialog>
+<p class="sr" role="status" aria-live="polite" data-carrito-aviso></p>
+
+<script>window.TIENDA_RAIZ = '../../';</script>
+<script src="../../assets/js/tienda-datos.js?v=11" defer></script>
+<script src="../../assets/vendor/gsap.min.js" defer></script>
+<script src="../../assets/vendor/ScrollTrigger.min.js" defer></script>
+<script src="../../assets/vendor/lenis.min.js" defer></script>
+<script src="../../assets/js/tienda.js?v=11" defer></script>
+</body>
+</html>
