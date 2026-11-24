@@ -10,9 +10,9 @@
 <link rel="icon" href="../../assets/img/favicon.png">
 <link rel="preload" href="../../assets/fonts/schibsted-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../../assets/css/styles.css?v=9">
-<link rel="stylesheet" href="../../assets/css/tienda.css?v=13">
+<link rel="stylesheet" href="../../assets/css/tienda.css?v=25">
 <script>document.documentElement.className = 'js'; window.__sinAnim = setTimeout(function () { document.documentElement.classList.add('sin-anim'); }, 4000);</script>
-<link rel="preload" href="../../assets/img/tienda/magnum-2-pro-drive-obj.webp" as="image" fetchpriority="high">
+<link rel="preload" href="../../assets/3d/r/magnum-2-pro-drive.webp" as="image" fetchpriority="high">
 </head>
 <body class="t">
 <a class="skip" href="#contenido">Saltar al contenido</a>
@@ -21,8 +21,8 @@
   <a class="nav__logo" href="../../index.html" aria-label="Sinermed, inicio"><img src="../../assets/img/logo-blanco.webp" alt="Sinermed" width="720" height="197"></a>
   <nav aria-label="Tienda">
     <ul>
-      <li><a href="../../tienda/#deporte">Deporte</a></li>
       <li><a href="../../tienda/#equipos">Los 20 equipos</a></li>
+      <li><a href="../../tienda/#deporte">Deporte</a></li>
       <li><a href="../../tienda/#usos">Usos</a></li>
       <li><a href="../../tienda/#ayuda">Ayuda</a></li>
     </ul>
@@ -35,13 +35,14 @@
 <section class="fp paper" aria-labelledby="h-fp">
   <div class="fp__visor">
     <div class="fp__plinto">
-      <img src="../../assets/img/tienda/magnum-2-pro-drive-obj.webp" alt="Magnum 2 Pro Drive de frente" width="708" height="1142" id="fp-img">
+      <div class="v3d v3d--ficha" data-visor="ficha" data-m="magnum-2-pro-drive" role="img" aria-label="Modelo 3D del equipo Magnum 2 Pro Drive"><img class="v3d__fija" src="../../assets/3d/r/magnum-2-pro-drive.webp" alt="" width="455" height="781"></div>
+      <img id="fp-img" class="fp__foto" alt="" hidden>
     </div>
     <ul class="fp__thumbs" aria-label="Fotos de Magnum 2 Pro Drive">
-        <li><button type="button" class="fp__thumb is-on" data-src="../../assets/img/tienda/magnum-2-pro-drive-obj.webp" data-w="708" data-h="1142" aria-label="Ver foto 1: Magnum 2 Pro Drive de frente" aria-pressed="true"><img src="../../assets/img/tienda/magnum-2-pro-drive-obj.webp" alt="" width="708" height="1142" loading="lazy"></button></li>
-        <li><button type="button" class="fp__thumb" data-src="../../assets/img/tienda/magnum-2-pro-drive-2.webp" data-w="800" data-h="800" aria-label="Ver foto 2: Magnum 2 Pro Drive en ángulo" aria-pressed="false"><img src="../../assets/img/tienda/magnum-2-pro-drive-2.webp" alt="" width="800" height="800" loading="lazy"></button></li>
-        <li><button type="button" class="fp__thumb" data-src="../../assets/img/tienda/magnum-2-pro-drive-3.webp" data-w="800" data-h="800" aria-label="Ver foto 3: Magnum 2 Pro Drive con sus accesorios" aria-pressed="false"><img src="../../assets/img/tienda/magnum-2-pro-drive-3.webp" alt="" width="800" height="800" loading="lazy"></button></li>
-        <li><button type="button" class="fp__thumb" data-src="../../assets/img/tienda/magnum-2-pro-drive-4.webp" data-w="886" data-h="1300" aria-label="Ver foto 4: Magnum 2 Pro Drive en uso" aria-pressed="false"><img src="../../assets/img/tienda/magnum-2-pro-drive-4.webp" alt="" width="886" height="1300" loading="lazy"></button></li>
+        <li><button type="button" class="fp__thumb fp__thumb--3d is-on" data-3d aria-label="Ver el modelo 3D de Magnum 2 Pro Drive" aria-pressed="true"><img src="../../assets/3d/r/magnum-2-pro-drive.webp" alt="" width="455" height="781" loading="lazy"></button></li>
+        <li><button type="button" class="fp__thumb es-estudio" data-src="../../assets/img/tienda/magnum-2-pro-drive-2.webp" data-w="800" data-h="800" aria-label="Ver foto 1: Magnum 2 Pro Drive en ángulo" aria-pressed="false"><img src="../../assets/img/tienda/magnum-2-pro-drive-2.webp" alt="" width="800" height="800" loading="lazy"></button></li>
+        <li><button type="button" class="fp__thumb" data-src="../../assets/img/tienda/magnum-2-pro-drive-3.webp" data-w="800" data-h="800" aria-label="Ver foto 2: Magnum 2 Pro Drive con sus accesorios" aria-pressed="false"><img src="../../assets/img/tienda/magnum-2-pro-drive-3.webp" alt="" width="800" height="800" loading="lazy"></button></li>
+        <li><button type="button" class="fp__thumb es-estudio" data-src="../../assets/img/tienda/magnum-2-pro-drive-4.webp" data-w="886" data-h="1300" aria-label="Ver foto 3: Magnum 2 Pro Drive en uso" aria-pressed="false"><img src="../../assets/img/tienda/magnum-2-pro-drive-4.webp" alt="" width="886" height="1300" loading="lazy"></button></li>
     </ul>
   </div>
   <div class="fp__compra">
@@ -113,7 +114,7 @@
   <ul class="tiles tiles--tres">
       <li>
         <a href="../magnum-3500-pro/">
-          <span class="tile__campo c1"><img src="../../assets/img/tienda/magnum-3500-pro-obj.webp" alt="" width="976" height="1199" loading="lazy"></span>
+          <div class="tile__campo c1"><div class="v3d v3d--baldosa" data-visor="baldosa" data-m="magnum-3500-pro" aria-hidden='true'><img class="v3d__fija" src="../../assets/3d/r/magnum-3500-pro.webp" alt="" width="557" height="737" loading="lazy"></div></div>
           <strong>Magnum 3500 Pro</strong>
           <span class="tile__nota">Cuatro canales para tratar varias zonas.</span>
           <span class="tile__precio">$8.280.000</span>
@@ -121,7 +122,7 @@
       </li>
       <li>
         <a href="../magnum-3000-pro/">
-          <span class="tile__campo c2"><img src="../../assets/img/tienda/magnum-3000-pro-obj.webp" alt="" width="976" height="1199" loading="lazy"></span>
+          <div class="tile__campo c2"><div class="v3d v3d--baldosa" data-visor="baldosa" data-m="magnum-3000-pro" aria-hidden='true'><img class="v3d__fija" src="../../assets/3d/r/magnum-3000-pro.webp" alt="" width="557" height="737" loading="lazy"></div></div>
           <strong>Magnum 3000 Pro</strong>
           <span class="tile__nota">70 programas para uso profesional.</span>
           <span class="tile__precio">$4.750.000</span>
@@ -129,7 +130,7 @@
       </li>
       <li>
         <a href="../magnum-xl-pro/">
-          <span class="tile__campo c3"><img src="../../assets/img/tienda/magnum-xl-obj.webp" alt="" width="736" height="1200" loading="lazy"></span>
+          <div class="tile__campo c3"><div class="v3d v3d--baldosa" data-visor="baldosa" data-m="magnum-xl-pro" aria-hidden='true'><img class="v3d__fija" src="../../assets/3d/r/magnum-xl-pro.webp" alt="" width="459" height="782" loading="lazy"></div></div>
           <strong>Magnum XL Pro</strong>
           <span class="tile__nota">46 programas y 400 gauss.</span>
           <span class="tile__precio">$4.280.000</span>
@@ -174,11 +175,11 @@
 <p class="sr" role="status" aria-live="polite" data-carrito-aviso></p>
 
 <script>window.TIENDA_RAIZ = '../../';</script>
-<script src="../../assets/js/tienda-datos.js?v=13" defer></script>
+<script src="../../assets/js/tienda-datos.js?v=25" defer></script>
 <script src="../../assets/vendor/gsap.min.js" defer></script>
 <script src="../../assets/vendor/ScrollTrigger.min.js" defer></script>
 <script src="../../assets/vendor/lenis.min.js" defer></script>
-<script src="../../assets/js/tienda.js?v=13" defer></script>
-<script src="../../assets/js/pie.js?v=13" defer></script>
+<script src="../../assets/js/tienda.js?v=25" defer></script>
+<script src="../../assets/js/pie.js?v=25" defer></script>
 </body>
 </html>

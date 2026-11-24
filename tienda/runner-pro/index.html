@@ -10,9 +10,9 @@
 <link rel="icon" href="../../assets/img/favicon.png">
 <link rel="preload" href="../../assets/fonts/schibsted-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../../assets/css/styles.css?v=9">
-<link rel="stylesheet" href="../../assets/css/tienda.css?v=13">
+<link rel="stylesheet" href="../../assets/css/tienda.css?v=25">
 <script>document.documentElement.className = 'js'; window.__sinAnim = setTimeout(function () { document.documentElement.classList.add('sin-anim'); }, 4000);</script>
-<link rel="preload" href="../../assets/img/tienda/runner-pro-obj.webp" as="image" fetchpriority="high">
+<link rel="preload" href="../../assets/3d/r/runner-pro.webp" as="image" fetchpriority="high">
 </head>
 <body class="t">
 <a class="skip" href="#contenido">Saltar al contenido</a>
@@ -21,8 +21,8 @@
   <a class="nav__logo" href="../../index.html" aria-label="Sinermed, inicio"><img src="../../assets/img/logo-blanco.webp" alt="Sinermed" width="720" height="197"></a>
   <nav aria-label="Tienda">
     <ul>
-      <li><a href="../../tienda/#deporte">Deporte</a></li>
       <li><a href="../../tienda/#equipos">Los 20 equipos</a></li>
+      <li><a href="../../tienda/#deporte">Deporte</a></li>
       <li><a href="../../tienda/#usos">Usos</a></li>
       <li><a href="../../tienda/#ayuda">Ayuda</a></li>
     </ul>
@@ -35,13 +35,14 @@
 <section class="fp paper" aria-labelledby="h-fp">
   <div class="fp__visor">
     <div class="fp__plinto">
-      <img src="../../assets/img/tienda/runner-pro-obj.webp" alt="Runner Pro de frente" width="431" height="741" id="fp-img">
+      <div class="v3d v3d--ficha" data-visor="ficha" data-m="runner-pro" role="img" aria-label="Modelo 3D del equipo Runner Pro"><img class="v3d__fija" src="../../assets/3d/r/runner-pro.webp" alt="" width="463" height="782"></div>
+      <img id="fp-img" class="fp__foto" alt="" hidden>
     </div>
     <ul class="fp__thumbs" aria-label="Fotos de Runner Pro">
-        <li><button type="button" class="fp__thumb is-on" data-src="../../assets/img/tienda/runner-pro-obj.webp" data-w="431" data-h="741" aria-label="Ver foto 1: Runner Pro de frente" aria-pressed="true"><img src="../../assets/img/tienda/runner-pro-obj.webp" alt="" width="431" height="741" loading="lazy"></button></li>
-        <li><button type="button" class="fp__thumb" data-src="../../assets/img/tienda/runner-pro-2.webp" data-w="800" data-h="800" aria-label="Ver foto 2: Runner Pro en ángulo" aria-pressed="false"><img src="../../assets/img/tienda/runner-pro-2.webp" alt="" width="800" height="800" loading="lazy"></button></li>
-        <li><button type="button" class="fp__thumb" data-src="../../assets/img/tienda/runner-pro-3.webp" data-w="800" data-h="800" aria-label="Ver foto 3: Runner Pro con sus accesorios" aria-pressed="false"><img src="../../assets/img/tienda/runner-pro-3.webp" alt="" width="800" height="800" loading="lazy"></button></li>
-        <li><button type="button" class="fp__thumb" data-src="../../assets/img/tienda/runner-pro-4.webp" data-w="803" data-h="1300" aria-label="Ver foto 4: Runner Pro en uso" aria-pressed="false"><img src="../../assets/img/tienda/runner-pro-4.webp" alt="" width="803" height="1300" loading="lazy"></button></li>
+        <li><button type="button" class="fp__thumb fp__thumb--3d is-on" data-3d aria-label="Ver el modelo 3D de Runner Pro" aria-pressed="true"><img src="../../assets/3d/r/runner-pro.webp" alt="" width="463" height="782" loading="lazy"></button></li>
+        <li><button type="button" class="fp__thumb es-estudio" data-src="../../assets/img/tienda/runner-pro-2.webp" data-w="800" data-h="800" aria-label="Ver foto 1: Runner Pro en ángulo" aria-pressed="false"><img src="../../assets/img/tienda/runner-pro-2.webp" alt="" width="800" height="800" loading="lazy"></button></li>
+        <li><button type="button" class="fp__thumb" data-src="../../assets/img/tienda/runner-pro-3.webp" data-w="800" data-h="800" aria-label="Ver foto 2: Runner Pro con sus accesorios" aria-pressed="false"><img src="../../assets/img/tienda/runner-pro-3.webp" alt="" width="800" height="800" loading="lazy"></button></li>
+        <li><button type="button" class="fp__thumb" data-src="../../assets/img/tienda/runner-pro-4.webp" data-w="803" data-h="1300" aria-label="Ver foto 3: Runner Pro en uso" aria-pressed="false"><img src="../../assets/img/tienda/runner-pro-4.webp" alt="" width="803" height="1300" loading="lazy"></button></li>
     </ul>
   </div>
   <div class="fp__compra">
@@ -116,7 +117,7 @@
   <ul class="tiles tiles--tres">
       <li>
         <a href="../triathlon-pro/">
-          <span class="tile__campo c1"><img src="../../assets/img/tienda/triathlon-pro-obj.webp" alt="" width="736" height="1200" loading="lazy"></span>
+          <div class="tile__campo c1"><div class="v3d v3d--baldosa" data-visor="baldosa" data-m="triathlon-pro" aria-hidden='true'><img class="v3d__fija" src="../../assets/3d/r/triathlon-pro.webp" alt="" width="461" height="782" loading="lazy"></div></div>
           <strong>Triathlon Pro</strong>
           <span class="tile__nota">424 programas para triatletas.</span>
           <span class="tile__precio">$3.240.000</span>
@@ -124,7 +125,7 @@
       </li>
       <li>
         <a href="../swing-pro/">
-          <span class="tile__campo c2"><img src="../../assets/img/tienda/swing-pro-obj.webp" alt="" width="737" height="1200" loading="lazy"></span>
+          <div class="tile__campo c2"><div class="v3d v3d--baldosa" data-visor="baldosa" data-m="swing-pro" aria-hidden='true'><img class="v3d__fija" src="../../assets/3d/r/swing-pro.webp" alt="" width="459" height="782" loading="lazy"></div></div>
           <strong>Swing Pro</strong>
           <span class="tile__nota">Fuerza y estabilidad para golfistas.</span>
           <span class="tile__precio">$3.180.000</span>
@@ -132,7 +133,7 @@
       </li>
       <li>
         <a href="../cycling-pro/">
-          <span class="tile__campo c3"><img src="../../assets/img/tienda/cycling-pro-obj.webp" alt="" width="425" height="734" loading="lazy"></span>
+          <div class="tile__campo c3"><div class="v3d v3d--baldosa" data-visor="baldosa" data-m="cycling-pro" aria-hidden='true'><img class="v3d__fija" src="../../assets/3d/r/cycling-pro.webp" alt="" width="456" height="784" loading="lazy"></div></div>
           <strong>Cycling Pro</strong>
           <span class="tile__nota">Rendimiento y recuperación en ciclismo.</span>
           <span class="tile__precio">$3.113.009</span>
@@ -177,11 +178,11 @@
 <p class="sr" role="status" aria-live="polite" data-carrito-aviso></p>
 
 <script>window.TIENDA_RAIZ = '../../';</script>
-<script src="../../assets/js/tienda-datos.js?v=13" defer></script>
+<script src="../../assets/js/tienda-datos.js?v=25" defer></script>
 <script src="../../assets/vendor/gsap.min.js" defer></script>
 <script src="../../assets/vendor/ScrollTrigger.min.js" defer></script>
 <script src="../../assets/vendor/lenis.min.js" defer></script>
-<script src="../../assets/js/tienda.js?v=13" defer></script>
-<script src="../../assets/js/pie.js?v=13" defer></script>
+<script src="../../assets/js/tienda.js?v=25" defer></script>
+<script src="../../assets/js/pie.js?v=25" defer></script>
 </body>
 </html>

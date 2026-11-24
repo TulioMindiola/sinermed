@@ -136,9 +136,10 @@
       marcar(mejor);
     }
     var pend = false;
-    window.addEventListener('scroll', function () { if (pend) return; pend = true; requestAnimationFrame(function () { pend = false; porPosicion(); }); }, { passive: true });
+    /* manda lo último que hizo el visitante: mover el cursor sobre una fila o desplazarse */
+    window.addEventListener('scroll', function () { encima = false; if (pend) return; pend = true; requestAnimationFrame(function () { pend = false; porPosicion(); }); }, { passive: true });
     filas.forEach(function (a) {
-      a.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') { encima = true; marcar(a); } });
+      a.addEventListener('pointermove', function (e) { if (e.pointerType === 'mouse' && (e.movementX || e.movementY)) { encima = true; marcar(a); } });
       a.addEventListener('focus', function () { marcar(a); });
     });
     lista.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') encima = false; });
@@ -158,7 +159,7 @@
     }
     function cargar() {
       var sc = document.createElement('script');
-      sc.src = 'assets/js/tienda3d.js?v=2'; sc.async = true;
+      sc.src = 'assets/js/tienda3d.js?v=7'; sc.async = true;
       sc.onload = function () {
         visor = window.Tienda3D && window.Tienda3D.montar(caja, { base: 'assets/3d/', orden: orden, v: 2 });
         if (!visor) { sin3d(); return; }
