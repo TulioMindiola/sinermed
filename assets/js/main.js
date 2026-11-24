@@ -376,24 +376,24 @@
   });
   entrar('.cita__firma span', { opacity: 0, y: 20 }, { trigger: '.cita__firma', duration: 0.8, stagger: 0.1, start: 'top 94%' });
 
-  /* ── TechCamp ── */
-  var tc = $$('.techcamp__title span');
-  if (tc.length === 2) {
-    gsap.timeline({ scrollTrigger: { trigger: '.techcamp', start: 'top bottom', end: 'bottom top', scrub: true } })
-      .fromTo(tc[0], { xPercent: -14 }, { xPercent: 10, ease: 'none' }, 0)
-      .fromTo(tc[1], { xPercent: 14 }, { xPercent: -10, ease: 'none' }, 0);
-  }
-  entrar('.print img', { clipPath: 'inset(0% 0% 100% 0%)' }, { trigger: '.techcamp', duration: 1.1, stagger: 0.14, start: 'top 55%' });
-  entrar('.techcamp__p', { opacity: 0, y: 24 }, { trigger: '.techcamp', duration: 0.9, start: 'top 45%' });
+  /* ── TechCamp: las letras suben una por una y el video se abre ── */
+  ScrollTrigger.create({ trigger: '.techcamp', start: 'top bottom', once: true, onEnter: function () { gsap.set('.techcamp__title .letra', { yPercent: 108 }); } });
+  ScrollTrigger.create({ trigger: '.techcamp', start: 'top 72%', once: true, onEnter: function () { gsap.to('.techcamp__title .letra', { yPercent: 0, duration: 1, ease: 'expo.out', stagger: 0.06 }); } });
+  entrar('.techcamp__video', { clipPath: 'inset(0% 0% 100% 0%)' }, { duration: 1.2, start: 'top 86%' });
+  entrar('.techcamp__foto img', { clipPath: 'inset(0% 0% 100% 0%)' }, { trigger: '.techcamp__foto', duration: 1.1, start: 'top 92%' });
 
-  /* Nosotros y contacto */
-  entrar('.nosotros__txt p', { opacity: 0, y: 36 }, { trigger: '.nosotros__txt', stagger: 0.12 });
-  entrar('.nosotros__datos li', { opacity: 0, y: 20 }, { trigger: '.nosotros__datos', duration: 0.8, stagger: 0.08 });
+  /* ── Nosotros ── */
+  entrar('.nosotros__txt > *', { opacity: 0, y: 30 }, { trigger: '.nosotros__txt', duration: 0.9, stagger: 0.1 });
+  entrar('.nosotros__foto', { clipPath: 'inset(0% 0% 0% 100%)' }, { duration: 1.3, start: 'top 82%' });
+  gsap.fromTo('.nosotros__foto img', { scale: 1.14 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '.nosotros__foto', start: 'top bottom', end: 'bottom 30%', scrub: true } });
+  entrar('.valores li', { opacity: 0, y: 34 }, { trigger: '.valores', duration: 0.8, stagger: 0.08, start: 'top 92%' });
+
+  /* ── Contacto ── */
   entrar(['.visita__title', '.visita__p', '.visita__datos > div', '.visita__curva'], { opacity: 0, y: 30 }, { trigger: '.visita', duration: 0.9, stagger: 0.07 });
-  entrar(['.cierre__frase', '.cierre__foto', '.cierre__links > *'], { opacity: 0, y: 30 }, { trigger: '.cierre', duration: 0.9, stagger: 0.07 });
+  entrar(['.cierre__frase', '.cierre__links > *'], { opacity: 0, y: 30 }, { trigger: '.cierre', duration: 0.9, stagger: 0.07 });
+  gsap.fromTo('.cierre__foto', { y: 46, rotation: -7 }, { y: -26, rotation: 3, ease: 'none', scrollTrigger: { trigger: '.cierre__arte', start: 'top bottom', end: 'bottom top', scrub: 0.6 } });
 
-  /* ── Pie: el nombre sube ── */
-  gsap.from('.pie__marca', { yPercent: 70, ease: 'none', scrollTrigger: { trigger: '.pie', start: 'top 60%', end: 'bottom bottom', scrub: 0.5 } });
+  /* ── Pie (el nombre se anima en pie.js) ── */
   entrar(['.pie__inv', '.pie__arriba .btn', '.pie__redes li'], { opacity: 0, y: 30 }, { trigger: '.pie__arriba', duration: 0.9, stagger: 0.06 });
 
   window.addEventListener('load', function () { ScrollTrigger.refresh(); });

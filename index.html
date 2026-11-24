@@ -14,7 +14,7 @@
 <link rel="icon" href="assets/img/favicon.png">
 <link rel="preload" href="assets/fonts/schibsted-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/img/atleta.webp" as="image" fetchpriority="high">
-<link rel="stylesheet" href="assets/css/styles.css?v=7">
+<link rel="stylesheet" href="assets/css/styles.css?v=9">
 <script>document.documentElement.className = 'js'; window.__sinAnim = setTimeout(function () { document.documentElement.classList.add('sin-anim'); }, 4000);</script>
 </head>
 <body>
@@ -438,25 +438,46 @@
 
 <!-- ───────────── TechCamp ───────────── -->
 <section class="techcamp" id="techcamp" aria-labelledby="h-techcamp">
-  <h2 class="techcamp__title" id="h-techcamp"><span>Tech</span><span>Camp</span></h2>
-  <figure class="print print--1"><img src="assets/img/tc-1.webp" alt="Cartel del TechCamp: Build the future" width="630" height="840" loading="lazy"></figure>
-  <figure class="print print--2"><img src="assets/img/tc-3.webp" alt="Conferencista frente al pendón del TechCamp en Cali" width="630" height="840" loading="lazy"></figure>
-  <figure class="print print--3"><img src="assets/img/tc-2.webp" alt="Asistentes prueban un sistema de cámaras de captura de movimiento junto a un pendón de Sinermed" width="630" height="840" loading="lazy"></figure>
-  <p class="techcamp__p">TechCamp es nuestro encuentro para probar la tecnología en persona. Ya pasó por Montería y Cali. Entre una edición y otra, Sinermed Academy abre webinars y talleres con expertos.</p>
+  <h2 class="techcamp__title" id="h-techcamp" data-ajustar>TechCamp</h2>
+  <div class="techcamp__grid">
+    <figure class="techcamp__video">
+      <video muted loop playsinline preload="none" poster="assets/img/techcamp-poster.jpg" data-autoplay aria-label="Resumen del TechCamp: corredores con sus dobles digitales, gafas de seguimiento ocular y captura de movimiento">
+        <source src="assets/video/techcamp.mp4" type="video/mp4">
+      </video>
+    </figure>
+    <div class="techcamp__lado">
+      <p class="techcamp__p" data-rise>TechCamp es nuestro encuentro para probar la tecnología en persona. Ya pasó por Montería y Cali. Entre una edición y otra, Sinermed Academy abre webinars y talleres con expertos.</p>
+      <figure class="techcamp__foto">
+        <img src="assets/img/tc-cali.webp" alt="Dos profesores de la Universidad de San Buenaventura frente al pendón del TechCamp en Cali" width="1120" height="720" loading="lazy">
+        <figcaption>TechCamp en Cali.</figcaption>
+      </figure>
+    </div>
+  </div>
 </section>
 
 <!-- ───────────── Nosotros ───────────── -->
 <section class="nosotros paper" id="nosotros" aria-labelledby="h-nosotros">
-  <h2 class="sr" id="h-nosotros">Quiénes somos</h2>
-  <ul class="nosotros__datos">
-    <li>Calle 62 # 3-50<br>Chapinero Alto, Bogotá</li>
-    <li>Más de 10 años<br>de experiencia</li>
-    <li><a href="mailto:info@sinermed.com.co">info@sinermed.com.co</a></li>
-  </ul>
-  <div class="nosotros__txt">
-    <p><img class="capitular" src="assets/img/equipo.webp" alt="Tres integrantes del equipo de Sinermed frente a una pantalla con una captura de movimiento" width="720" height="720" loading="lazy"><strong>Sinermed es la marca de biotecnología de Sinergym.</strong> Reunimos a profesionales de áreas clínicas y científicas con ingenieros y especialistas en tecnología que comparten el amor por el deporte y el cuidado de la salud. Desde Bogotá llevamos tecnología de medición a hospitales, universidades, centros de alto rendimiento e industrias de todo el país.</p>
-    <p class="suave">Lo que nos mueve: buscar siempre la excelencia, adaptarnos a cada proyecto, respetar a nuestro equipo y cumplir en cada una de nuestras acciones.</p>
+  <h2 class="nosotros__title" id="h-nosotros"><span class="linea"><span>La marca de biotecnología</span></span> <span class="linea"><span>de Sinergym</span></span></h2>
+  <div class="nosotros__cuerpo">
+    <div class="nosotros__txt">
+      <p>Reunimos a profesionales de áreas clínicas y científicas con ingenieros y especialistas en tecnología que comparten el amor por el deporte y el cuidado de la salud.</p>
+      <p>Desde Bogotá llevamos tecnología de medición a hospitales, universidades, centros de alto rendimiento e industrias de todo el país.</p>
+      <ul class="nosotros__datos">
+        <li>Más de 10 años de experiencia</li>
+        <li>Calle 62 # 3-50, Chapinero Alto, Bogotá</li>
+        <li><a href="mailto:info@sinermed.com.co">info@sinermed.com.co</a></li>
+      </ul>
+    </div>
+    <figure class="nosotros__foto">
+      <img src="assets/img/nosotros.webp" alt="Tres integrantes del equipo de Sinermed frente a una pantalla con una captura de movimiento en vivo" width="1456" height="1070" loading="lazy">
+    </figure>
   </div>
+  <ul class="valores">
+    <li><strong>Excelencia</strong> La buscamos siempre.</li>
+    <li><strong>Adaptación</strong> A cada proyecto.</li>
+    <li><strong>Respeto</strong> Por nuestro equipo.</li>
+    <li><strong>Cumplimiento</strong> En cada una de nuestras acciones.</li>
+  </ul>
 </section>
 
 <!-- ───────────── Contacto ───────────── -->
@@ -474,7 +495,7 @@
 
   <div class="cierre">
     <p class="cierre__frase">Cuéntanos qué quieres medir y te ayudamos a elegir la tecnología para tu clínica, tu laboratorio o tu equipo.</p>
-    <img class="cierre__foto" src="assets/img/catalogo.webp" alt="Catálogo impreso de Sinermed: Medir, analizar y transformar" width="480" height="480" loading="lazy">
+    <div class="cierre__arte"><img class="cierre__foto" src="assets/img/catalogo-3d.webp" alt="Catálogo impreso de Sinermed: Medir, analizar y transformar" width="1200" height="855" loading="lazy"></div>
     <div class="cierre__links">
       <p class="cierre__q">¿Hablamos?</p>
       <a id="wa-final" href="https://wa.me/573222662454?text=Hola%2C%20Sinermed.%20Quiero%20una%20asesor%C3%ADa%20para%20elegir%20tecnolog%C3%ADa%20de%20medici%C3%B3n." rel="noopener">WhatsApp +57 322 266 2454</a>
@@ -502,12 +523,13 @@
     <p>© 2026 Sinermed · PBX (601) 758 2196 · Fotos y videos: Sinermed y las marcas que representa</p>
     <p>Propuesta de diseño de <a href="https://impulsapixel.com" rel="noopener">ImpulsaPixel</a></p>
   </div>
-  <p class="pie__marca" aria-hidden="true">Sinermed</p>
+  <p class="pie__marca" aria-hidden="true" data-ajustar>Sinermed</p>
 </footer>
 
 <script src="assets/vendor/gsap.min.js" defer></script>
 <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
 <script src="assets/vendor/lenis.min.js" defer></script>
-<script src="assets/js/main.js?v=6" defer></script>
+<script src="assets/js/main.js?v=7" defer></script>
+<script src="assets/js/pie.js?v=1" defer></script>
 </body>
 </html>

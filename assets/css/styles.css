@@ -34,7 +34,7 @@
   --step-display: clamp(3.1rem, 9.4vw, 11rem);
   --step-poster: clamp(2.9rem, 7.5vw, 8.6rem);             /* cifras y cita */
   --step-statement: clamp(1.5rem, 1rem + 1.75vw, 2.25rem);  /* frases: 36 px como máximo */
-  --step-giant: 27.5vw;                                    /* el nombre cortado y TechCamp */
+  --step-giant: 27.5vw;                                    /* «Tienda», en la portada de la tienda */
 
   --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
 }
@@ -341,27 +341,42 @@ sub { font-size: 0.62em; vertical-align: -0.2em; line-height: 0; }
 .citas blockquote:last-child { grid-column: 7 / 12; }
 .citas footer { margin-top: 16px; color: var(--muted); font-size: var(--step-small); }
 
-/* ── TechCamp: copias sobre el titular ── */
-.techcamp { position: relative; height: 100svh; min-height: 620px; max-height: 1100px; overflow: hidden; background: var(--field); color: var(--bg); }
-.techcamp__title { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-52%); text-align: center; font-size: var(--step-giant); font-weight: 900; letter-spacing: -0.06em; line-height: 0.82; }
-.techcamp__title span { display: block; }
-.print { position: absolute; z-index: 2; top: 50%; left: 50%; width: clamp(180px, 24vw, 400px); padding: 8px; background: var(--paper); transition: transform 0.25s var(--ease); will-change: transform; }
-.print img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
-.print--1 { transform: translate(-88%, -54%) rotate(-8deg); }
-.print--2 { transform: translate(-18%, -46%) rotate(6deg); }
-.print--3 { z-index: 1; width: clamp(130px, 15vw, 250px); left: auto; right: 6vw; top: auto; bottom: -7svh; transform: rotate(4deg); }
-.print--1:hover { transform: translate(-88%, -54%) rotate(0deg); z-index: 4; }
-.print--2:hover { transform: translate(-18%, -46%) rotate(0deg); z-index: 4; }
-.print--3:hover { transform: rotate(0deg); z-index: 4; }
-.techcamp__p { position: absolute; z-index: 3; left: var(--m); bottom: 28px; max-width: 38ch; font-weight: 600; }
+/* Titulares que llenan el ancho: cada letra es una pieza */
+.letras { display: inline-block; white-space: nowrap; }
+.letra, .letra__in { display: inline-block; }
+.letra { letter-spacing: -0.06em; }
+.techcamp__title .letra:first-child { letter-spacing: -0.125em; }
+.letra__in { transform-origin: 50% 92%; }
+.letra:last-child { letter-spacing: 0; }
 
-/* ── Nosotros: el retrato como capitular ── */
-.nosotros { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--g); padding: clamp(96px, 10vw, 150px) var(--m); }
-.nosotros__datos { grid-column: 1 / 3; display: grid; gap: 22px; align-content: start; font-size: var(--step-small); color: var(--paper-muted); }
-.nosotros__txt { grid-column: 3 / 13; font-size: var(--step-statement); line-height: 1.2; letter-spacing: -0.025em; color: var(--paper-muted); }
-.nosotros__txt strong { color: var(--paper-ink); font-weight: 800; }
-.nosotros__txt p + p { margin-top: 1.2em; }
-.capitular { float: left; width: 3.6em; height: 3.6em; margin: 0.08em 0.5em 0 0; object-fit: cover; }
+/* ── TechCamp: el nombre de lado a lado y el encuentro debajo ── */
+.techcamp { padding: clamp(48px, 5vw, 88px) var(--m) var(--gap); background: var(--field); color: var(--bg); overflow: hidden; }
+.techcamp__title { overflow: hidden; font-size: 18.4vw; font-weight: 900; letter-spacing: -0.06em; line-height: 0.98; white-space: nowrap; }
+.techcamp__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--g); margin-top: clamp(20px, 2vw, 36px); }
+.techcamp__video { grid-column: 1 / 9; overflow: hidden; }
+.techcamp__video video { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: var(--bg); }
+.techcamp__lado { grid-column: 9 / 13; display: flex; flex-direction: column; justify-content: space-between; gap: clamp(20px, 2vw, 32px); }
+.techcamp__p { font-size: clamp(1.125rem, 0.9rem + 0.75vw, 1.5rem); line-height: 1.35; font-weight: 600; letter-spacing: -0.015em; }
+.techcamp__foto { overflow: hidden; }
+.techcamp__foto img { width: 100%; aspect-ratio: 14 / 9; object-fit: cover; }
+.techcamp__foto figcaption { margin-top: 10px; font-size: var(--step-small); font-weight: 600; }
+
+/* ── Nosotros: el equipo, en grande ── */
+.nosotros { padding: var(--gap) 0 clamp(64px, 7vw, 108px); }
+.nosotros__title { padding: 0 var(--m); font-size: var(--step-head); line-height: 0.98; }
+.nosotros__title .linea { display: inline-block; vertical-align: bottom; }
+.nosotros__cuerpo { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--g); align-items: stretch; margin-top: clamp(40px, 4.4vw, 72px); padding-left: var(--m); }
+.nosotros__txt { grid-column: 1 / 5; display: flex; flex-direction: column; font-size: var(--step-lead); line-height: 1.38; letter-spacing: -0.015em; }
+.nosotros__txt p + p { margin-top: 1em; }
+.nosotros__datos { display: grid; gap: 8px; margin-top: auto; padding-top: 40px; font-size: var(--step-body); color: var(--paper-muted); }
+.nosotros__datos a { text-underline-offset: 4px; }
+.nosotros__foto { grid-column: 6 / 13; overflow: hidden; }
+.nosotros__foto img { width: 100%; height: 100%; min-height: 420px; aspect-ratio: 1.36; object-fit: cover; }
+.valores { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin: clamp(40px, 4.4vw, 72px) var(--m) 0; }
+.valores li { padding: clamp(20px, 2vw, 32px); background: #dfe8e6; line-height: 1.35; color: var(--paper-muted); transition: background-color 0.3s ease, color 0.3s ease; }
+.valores strong { display: block; margin-bottom: clamp(28px, 3.6vw, 64px); font-size: clamp(1.375rem, 0.9rem + 1.3vw, 2rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: var(--paper-ink); transition: color 0.3s ease; }
+.valores li:hover { background: var(--field); color: var(--bg); }
+.valores li:hover strong { color: var(--bg); }
 
 /* ── Contacto ── */
 .contacto { padding: var(--gap) var(--m) clamp(96px, 9vw, 130px); }
@@ -372,9 +387,11 @@ sub { font-size: 0.62em; vertical-align: -0.2em; line-height: 0; }
 .visita__datos dt { font-size: var(--step-head); font-weight: 800; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; }
 .visita__datos dd { margin-top: 10px; color: var(--muted); max-width: 16ch; line-height: 1.3; }
 .visita__curva { grid-column: 8 / 13; width: 100%; height: clamp(90px, 9vw, 140px); color: var(--field); overflow: visible; }
-.cierre { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--g); align-items: start; margin-top: clamp(120px, 12vw, 180px); }
-.cierre__frase { grid-column: 1 / 6; font-size: var(--step-statement); font-weight: 600; letter-spacing: -0.03em; line-height: 1.12; }
-.cierre__foto { grid-column: 8 / 10; width: 100%; aspect-ratio: 1; object-fit: cover; }
+.cierre { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--g); align-items: center; margin-top: clamp(120px, 12vw, 180px); }
+.cierre__frase { grid-column: 1 / 6; text-wrap: balance; font-size: var(--step-statement); font-weight: 600; letter-spacing: -0.03em; line-height: 1.12; }
+.cierre__arte { grid-column: 6 / 10; position: relative; display: grid; place-items: center; padding: 6% 0; }
+.cierre__arte::before { content: ""; position: absolute; left: 50%; top: 50%; width: 62%; aspect-ratio: 1; transform: translate(-50%, -50%); background: var(--field); }
+.cierre__foto { position: relative; width: 100%; height: auto; will-change: transform; }
 .cierre__links { grid-column: 10 / 13; display: grid; justify-items: start; }
 .cierre__q { font-weight: 600; margin-bottom: 20px; }
 .cierre__links a { padding: 5px 0; text-underline-offset: 4px; text-decoration-thickness: 2px; transition: color 0.25s; }
@@ -390,7 +407,11 @@ sub { font-size: 0.62em; vertical-align: -0.2em; line-height: 0; }
 .pie__redes a { padding: 4px 0; display: inline-block; text-underline-offset: 4px; }
 .pie__redes a:hover { color: var(--field); }
 .pie__creditos { margin-top: auto; padding-top: 64px; display: flex; justify-content: space-between; gap: 24px; font-size: var(--step-small); color: var(--paper-muted); position: relative; z-index: 2; }
-.pie__marca { margin: 0; font-size: var(--step-giant); font-weight: 900; letter-spacing: -0.07em; line-height: 0.74; white-space: nowrap; transform: translateY(22%); margin-top: -0.02em; }
+.pie__marca { position: relative; margin: clamp(20px, 3vw, 56px) 0 0; padding-bottom: clamp(8px, 1vw, 18px); font-size: 22vw; font-weight: 900; letter-spacing: -0.055em; line-height: 0.98; white-space: nowrap; cursor: default; }
+.pie__marca .letra { position: relative; }
+.pie__marca .letra__in { position: relative; z-index: 1; }
+.pie__cuadro { position: absolute; z-index: 0; left: 3%; top: 24%; width: 0.62em; height: 0.62em; background: var(--field); }
+
 
 /* ── Teléfono y tableta ── */
 @media (max-width: 1180px) {
@@ -493,45 +514,41 @@ sub { font-size: 0.62em; vertical-align: -0.2em; line-height: 0; }
   .citas { display: grid; grid-template-columns: 1fr; row-gap: 40px; margin-top: 72px; }
   .citas blockquote:first-child, .citas blockquote:last-child { grid-column: 1; }
 
-  .techcamp { height: 86svh; min-height: 600px; }
-  .print { width: 40vw; padding: 6px; }
-  .print--1 { transform: translate(-86%, -60%) rotate(-6deg); }
-  .print--2 { transform: translate(-20%, -42%) rotate(5deg); }
-  .print--1:hover { transform: translate(-86%, -60%) rotate(0deg); }
-  .print--2:hover { transform: translate(-20%, -42%) rotate(0deg); }
-  .print--3 { display: none; }
-  .techcamp__p { right: var(--m); bottom: 20px; }
+  .techcamp { padding-top: 84px; }
+  .techcamp__grid { display: block; }
+  .techcamp__lado { margin-top: 24px; gap: 28px; }
+  .techcamp__video, .techcamp__foto { margin: 0 calc(var(--m) * -1); }
+  .techcamp__foto figcaption { padding: 0 var(--m); }
 
-  .nosotros { display: block; }
-  .nosotros__txt { line-height: 1.25; }
-  .capitular { width: 110px; height: 110px; }
-  .nosotros__datos { grid-template-columns: 1fr 1fr; column-gap: 12px; margin-top: 40px; }
-  .nosotros__datos li:last-child { grid-column: 1 / -1; }
-  .nosotros { display: flex; flex-direction: column-reverse; }
+  .nosotros__title { font-size: 6.9vw; }
+  .nosotros__cuerpo { display: flex; flex-direction: column; padding-left: 0; }
+  .nosotros__foto { order: -1; }
+  .nosotros__foto img { height: auto; min-height: 0; }
+  .nosotros__txt { margin-top: 28px; padding: 0 var(--m); }
+  .nosotros__datos { padding-top: 28px; }
+  .valores { grid-template-columns: 1fr 1fr; gap: 4px; }
+  .valores li { padding: 18px 16px 20px; font-size: 1rem; }
+  .valores strong { margin-bottom: 28px; font-size: 1.375rem; }
 
   .visita { display: block; }
   .visita__p { margin-top: 20px; }
   .visita__datos { margin-top: 40px; column-gap: 12px; }
   .visita__curva { margin-top: 32px; }
-  .cierre { grid-template-columns: 96px 1fr; column-gap: 16px; row-gap: 32px; margin-top: 96px; }
-  .cierre__frase { grid-column: 1 / -1; }
-  .cierre__foto { grid-column: 1; }
-  .cierre__links { grid-column: 2; }
-  .cierre__nota { grid-column: 1 / -1; }
+  .cierre { display: block; margin-top: 96px; }
+  .cierre__arte { margin: 32px 0 36px; }
 
   .pie { min-height: 0; }
   .pie__arriba { display: block; }
   .pie__arriba .btn { width: 100%; margin-top: 28px; }
   .pie__redes { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 32px; }
   .pie__creditos { flex-direction: column; gap: 6px; padding-top: 56px; }
-  .pie__marca { margin-top: 0.06em; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .marcas__fila { animation: none; }
   .js .hero__l1 > span, .js .hero__l2 > span, .js .hero__lead, .js .hero__facts,
   .js .hero__atleta, .js .hero__square { opacity: 1; transform: none; }
-  .item > img, .item__txt, .btn, .print, .lineas__marco img, .visor__lienzo, .confian__muro img { transition: none; }
+  .item > img, .item__txt, .btn, .lineas__marco img, .visor__lienzo, .confian__muro img { transition: none; }
   .analizar { height: auto; }
   .analizar__stage { position: relative; height: 100svh; }
 }

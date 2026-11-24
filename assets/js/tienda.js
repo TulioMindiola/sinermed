@@ -248,7 +248,6 @@
     $$('.pago__sug .tiles > li').forEach(function (li, i) { entrar(li, { opacity: 0, y: 44 }, { delay: i * 0.07 }); });
   }
   entrar(['.pie__inv', '.pie__arriba .btn', '.pie__redes li'], { opacity: 0, y: 30 }, { trigger: '.pie__arriba', stagger: 0.06 });
-  gsap.from('.pie__marca', { yPercent: 70, ease: 'none', scrollTrigger: { trigger: '.pie', start: 'top 60%', end: 'bottom bottom', scrub: 0.5 } });
 
   window.addEventListener('load', function () { ScrollTrigger.refresh(); seguir(); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
