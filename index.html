@@ -14,7 +14,7 @@
 <link rel="icon" href="assets/img/favicon.png">
 <link rel="preload" href="assets/fonts/schibsted-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/img/atleta.webp" as="image" fetchpriority="high">
-<link rel="stylesheet" href="assets/css/styles.css?v=9">
+<link rel="stylesheet" href="assets/css/styles.css?v=12">
 <script>document.documentElement.className = 'js'; window.__sinAnim = setTimeout(function () { document.documentElement.classList.add('sin-anim'); }, 4000);</script>
 </head>
 <body>
@@ -55,16 +55,23 @@
 
 <!-- ───────────── Qué hace Sinermed ───────────── -->
 <section class="intro paper" id="que-hacemos" aria-labelledby="h-intro">
-  <h2 class="intro__title" id="h-intro"><span class="intro__l1">El cuerpo humano,</span> <span class="intro__l2" data-text="convertido en datos">convertido en datos</span></h2>
-  <p class="intro__p" data-rise>Traemos a Colombia los equipos que usan los mejores laboratorios del mundo y te acompañamos desde la asesoría hasta el mantenimiento.</p>
-  <figure class="intro__big">
-    <img src="assets/img/intro-tenis.webp" alt="Tenista con marcadores de captura de movimiento y máscara de ergoespirometría golpea una pelota en una cancha rodeada de cámaras" width="936" height="1170" loading="lazy">
-    <figcaption>Captura de movimiento Qualisys y consumo de oxígeno en la misma jugada.</figcaption>
-  </figure>
-  <figure class="intro__small" data-rise>
-    <img src="assets/img/intro-emg.webp" alt="Espalda de un deportista con sensores de electromiografía y marcadores reflectivos frente a una pantalla con su esqueleto digital" width="720" height="800" loading="lazy">
-    <figcaption>Electromiografía y marcadores en un lanzador.</figcaption>
-  </figure>
+  <div class="intro__txt">
+    <h2 class="intro__title" id="h-intro"><span class="linea"><span>El cuerpo humano,</span></span> <span class="linea"><span>convertido en datos</span></span></h2>
+    <p class="intro__p" data-rise>Traemos a Colombia los equipos que usan los mejores laboratorios del mundo y te acompañamos desde la asesoría hasta el mantenimiento.</p>
+    <dl class="angulos" id="angulos">
+      <div data-ang="rodilla"><dt>Rodilla</dt><dd>95° a 144°</dd></div>
+      <div data-ang="cadera"><dt>Cadera</dt><dd>157° a 179°</dd></div>
+      <div data-ang="codo"><dt>Codo</dt><dd>49° a 111°</dd></div>
+    </dl>
+    <p class="intro__nota">Corredora del Proyecto 70.3, de Sinermed y el Hospital Universitario Nacional. Ángulos calculados sobre este video; en el laboratorio se miden con marcadores y cámaras.</p>
+  </div>
+  <div class="cuerpo" id="cuerpo">
+    <video muted loop playsinline preload="none" poster="assets/img/cuerpo-poster.jpg" aria-label="Corredora con marcadores de captura de movimiento sobre una banda, en un laboratorio de pared azul">
+      <source src="assets/video/cuerpo.mp4" type="video/mp4">
+    </video>
+    <canvas class="cuerpo__lienzo" aria-hidden="true"></canvas>
+    <div class="cuerpo__corte" id="cuerpo-corte" role="slider" tabindex="0" aria-label="Comparar el cuerpo con sus datos" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><svg viewBox="0 0 44 44" width="44" height="44" aria-hidden="true"><path d="M17 14l-8 8 8 8M27 14l8 8-8 8" fill="none" stroke="currentColor" stroke-width="3.4"/></svg></div>
+  </div>
   <div class="marcas" aria-label="Marcas que representamos">
     <p class="marcas__label" data-rise>Somos distribuidores oficiales de marcas que son referencia mundial en su campo.</p>
     <div class="marcas__pista marquee">
@@ -529,7 +536,7 @@
 <script src="assets/vendor/gsap.min.js" defer></script>
 <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
 <script src="assets/vendor/lenis.min.js" defer></script>
-<script src="assets/js/main.js?v=13" defer></script>
+<script src="assets/js/main.js?v=15" defer></script>
 <script src="assets/js/pie.js?v=1" defer></script>
 </body>
 </html>

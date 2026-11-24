@@ -75,6 +75,148 @@
     });
   })();
 
+  /* ── El cuerpo, convertido en datos: el esqueleto se calculó cuadro por cuadro sobre este mismo video ── */
+  (function () {
+    var caja = $('#cuerpo'), lienzo = $('.cuerpo__lienzo'), corte = $('#cuerpo-corte'), tabla = $('#angulos');
+    if (!caja || !lienzo || !lienzo.getContext) return;
+    var video = $('video', caja), ctx = lienzo.getContext('2d'), D = null, P = {}, W = 0, H = 0;
+    var visible = false, raf = 0, w = 1, meta = 1, mano = null, suelta = 0, filas = {};
+    var VERDE = '#9aca3b', AZUL = '#3aa5e6', BLANCO = '#f3f7f6';
+    var SEG = [[11, 12, BLANCO], [11, 23, BLANCO], [12, 24, BLANCO], [23, 24, BLANCO], [11, 13, AZUL], [13, 15, AZUL], [23, 25, AZUL], [25, 27, AZUL], [27, 29, AZUL], [29, 31, AZUL], [27, 31, AZUL], [12, 14, VERDE], [14, 16, VERDE], [24, 26, VERDE], [26, 28, VERDE], [28, 30, VERDE], [30, 32, VERDE], [28, 32, VERDE]];
+    var PUN = [11, 12, 13, 14, 15, 16, 23, 24, 25, 26, 27, 28, 31, 32];
+
+    function medir() {
+      var r = caja.getBoundingClientRect(), d = Math.min(window.devicePixelRatio || 1, 2);
+      W = r.width; H = r.height;
+      lienzo.width = Math.round(W * d); lienzo.height = Math.round(H * d);
+      ctx.setTransform(d, 0, 0, d, 0, 0);
+    }
+    /* El video se recorta con «cover»: los puntos siguen el mismo recorte */
+    function ajuste() { var e = Math.max(W / 9, H / 14), vw = 9 * e, vh = 14 * e; return { x: (W - vw) / 2, y: (H - vh) / 2, w: vw, h: vh }; }
+    function pose() {
+      var f = (video.currentTime * D.fps) % D.n, a = Math.floor(f), b = (a + 1) % D.n, t = f - a, c = ajuste();
+      D.id.forEach(function (id, i) {
+        var p = D.p[a][i], q = D.p[b][i];
+        P[id] = [c.x + (p[0] + (q[0] - p[0]) * t) * c.w, c.y + (p[1] + (q[1] - p[1]) * t) * c.h];
+      });
+      return f;
+    }
+    function linea(a, b, g, col) { ctx.strokeStyle = col; ctx.lineWidth = g; ctx.beginPath(); ctx.moveTo(P[a][0], P[a][1]); ctx.lineTo(P[b][0], P[b][1]); ctx.stroke(); }
+    function arco(c, a, b, r, txt, lado) {
+      var a0 = Math.atan2(P[a][1] - P[c][1], P[a][0] - P[c][0]), a1 = Math.atan2(P[b][1] - P[c][1], P[b][0] - P[c][0]), d = a1 - a0;
+      while (d > Math.PI) d -= 2 * Math.PI;
+      while (d < -Math.PI) d += 2 * Math.PI;
+      ctx.strokeStyle = BLANCO; ctx.lineWidth = Math.max(2, W * 0.0045);
+      ctx.beginPath(); ctx.arc(P[c][0], P[c][1], r, a0, a0 + d, d < 0); ctx.stroke();
+      ctx.fillStyle = BLANCO; ctx.font = '800 ' + Math.round(W * 0.046) + 'px "Schibsted Grotesk", sans-serif';
+      ctx.textAlign = lado > 0 ? 'left' : 'right'; ctx.textBaseline = 'middle';
+      ctx.fillText(txt, P[c][0] + lado * r * 1.35, P[c][1]);
+    }
+    function dibujar(ahora) {
+      raf = 0;
+      if (!D) return;
+      if (mano !== null) meta = mano;
+      else if (ahora > suelta) {
+        var r = caja.getBoundingClientRect(), vh = window.innerHeight, p = (vh - r.top) / (vh + r.height);
+        meta = p < 0.28 ? 1 : p < 0.5 ? 1 - (p - 0.28) / 0.22 * 0.5 : p < 0.64 ? 0.5 : Math.max(0.06, 0.5 - (p - 0.64) / 0.2 * 0.44);
+      }
+      w += (meta - w) * (reduce ? 1 : 0.14);
+      var f = pose(), x = w * W, g = W * 0.0125, i0 = Math.floor(f) % D.n, c = ajuste();
+      ctx.clearRect(0, 0, W, H);
+      ctx.lineCap = ctx.lineJoin = 'round';
+
+      /* lado del cuerpo: solo se marcan las articulaciones */
+      ctx.save(); ctx.beginPath(); ctx.rect(0, 0, x, H); ctx.clip();
+      ctx.strokeStyle = BLANCO; ctx.lineWidth = Math.max(1.5, W * 0.0035);
+      PUN.forEach(function (k) { ctx.beginPath(); ctx.arc(P[k][0], P[k][1], W * 0.014, 0, 7); ctx.stroke(); });
+      ctx.restore();
+
+      /* lado de los datos */
+      ctx.save(); ctx.beginPath(); ctx.rect(x, 0, W - x, H); ctx.clip();
+      ctx.fillStyle = 'rgba(6, 22, 36, 0.93)'; ctx.fillRect(x, 0, W - x, H);
+      ctx.fillStyle = 'rgba(243, 247, 246, 0.1)';
+      for (var gy = W / 24; gy < H; gy += W / 12) for (var gx = W / 24; gx < W; gx += W / 12) if (gx > x - 2) ctx.fillRect(gx - 1, gy - 1, 2, 2);
+      [[28, VERDE], [27, AZUL], [16, VERDE]].forEach(function (q) { /* recorrido de los tobillos y la mano en el ciclo */
+        var i = D.id.indexOf(q[0]);
+        ctx.globalAlpha = 0.45; ctx.strokeStyle = q[1]; ctx.lineWidth = Math.max(1.5, W * 0.004); ctx.beginPath();
+        for (var k = 0; k <= D.n; k++) { var pt = D.p[k % D.n][i]; ctx[k ? 'lineTo' : 'moveTo'](c.x + pt[0] * c.w, c.y + pt[1] * c.h); }
+        ctx.stroke(); ctx.globalAlpha = 1;
+      });
+      SEG.forEach(function (s) { linea(s[0], s[1], g, s[2]); });
+      var cx = (P[7][0] + P[8][0] + P[0][0]) / 3, cy = (P[7][1] + P[8][1] + P[0][1]) / 3 - W * 0.012, nx = (P[11][0] + P[12][0]) / 2, ny = (P[11][1] + P[12][1]) / 2, L = Math.hypot(nx - cx, ny - cy) || 1, rc = W * 0.078;
+      ctx.strokeStyle = BLANCO; ctx.lineWidth = g;
+      ctx.beginPath(); ctx.arc(cx, cy, rc, 0, 7); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(nx, ny); ctx.lineTo(cx + (nx - cx) * rc / L, cy + (ny - cy) * rc / L); ctx.stroke();
+      ctx.fillStyle = BLANCO;
+      PUN.forEach(function (k) { ctx.beginPath(); ctx.arc(P[k][0], P[k][1], W * 0.0145, 0, 7); ctx.fill(); });
+      arco(26, 24, 28, W * 0.075, Math.round(D.a.rodilla[i0]) + '°', -1);
+      arco(14, 12, 16, W * 0.06, Math.round(D.a.codo[i0]) + '°', -1);
+      ctx.restore();
+
+      corte.style.left = (w * 100) + '%';
+      corte.setAttribute('aria-valuenow', Math.round((1 - w) * 100));
+      Object.keys(filas).forEach(function (k) {
+        var q = filas[k], a = D.a[k][i0];
+        q.n.textContent = Math.round(a) + '°';
+        q.punto.style.left = (q.izq + f / D.n * q.ancho) + 'px';
+        q.punto.style.top = (q.arriba + (52 - (a - q.lo) / (q.hi - q.lo) * 48) / 56 * q.alto) + 'px';
+      });
+      if (visible && (!reduce || Math.abs(meta - w) > 0.002)) pedir();
+    }
+    function pedir() { if (!raf) raf = requestAnimationFrame(dibujar); }
+    function medirFilas() {
+      Object.keys(filas).forEach(function (k) {
+        var q = filas[k], a = q.svg.getBoundingClientRect(), b = q.fila.getBoundingClientRect();
+        q.ancho = a.width; q.alto = a.height; q.arriba = a.top - b.top; q.izq = a.left - b.left;
+      });
+    }
+
+    function arrancar(d) {
+      D = d; medir();
+      caja.classList.add('is-viva'); tabla.classList.add('is-viva');
+      $$('[data-ang]', tabla).forEach(function (fila) {
+        var k = fila.getAttribute('data-ang'), a = D.a[k], lo = Math.min.apply(null, a), hi = Math.max.apply(null, a), pts = [];
+        for (var i = 0; i <= D.n; i++) pts.push((i / D.n * 300).toFixed(1) + ',' + (52 - (a[i % D.n] - lo) / (hi - lo) * 48).toFixed(1));
+        fila.insertAdjacentHTML('beforeend', '<svg viewBox="0 0 300 56" preserveAspectRatio="none" aria-hidden="true"><polyline points="' + pts.join(' ') + '" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg><i class="angulos__punto"></i>');
+        filas[k] = { fila: fila, n: $('dd', fila), svg: $('svg', fila), punto: $('.angulos__punto', fila), lo: lo, hi: hi };
+      });
+      medirFilas(); pedir();
+      if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+    }
+    var pedido = false;
+    function cargar() {
+      if (pedido) return;
+      pedido = true;
+      fetch('assets/js/cuerpo.json?v=1').then(function (r) { return r.json(); }).then(arrancar).catch(function () {});
+    }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) { if (es[es.length - 1].isIntersecting) cargar(); }, { rootMargin: '800px 0px' }).observe(caja);
+      new IntersectionObserver(function (es) {
+        visible = es[es.length - 1].isIntersecting;
+        if (visible) { video.playbackRate = 0.8; if (D) medirFilas(); pedir(); }
+      }, { threshold: 0.02 }).observe(caja);
+    } else { visible = true; cargar(); }
+    window.addEventListener('resize', function () { if (D) { medir(); medirFilas(); pedir(); } });
+    window.addEventListener('scroll', function () { if (D && visible) pedir(); }, { passive: true });
+
+    /* El corte sigue al cursor o al dedo, y se mueve con las flechas del teclado */
+    function aqui(e) { var r = caja.getBoundingClientRect(); mano = Math.min(0.98, Math.max(0.02, (e.clientX - r.left) / r.width)); pedir(); }
+    function soltar() { if (mano === null) return; mano = null; suelta = performance.now() + 900; setTimeout(pedir, 920); }
+    caja.addEventListener('pointerdown', function (e) { aqui(e); });
+    caja.addEventListener('pointermove', function (e) { if (e.pointerType === 'mouse' || e.buttons) aqui(e); });
+    caja.addEventListener('pointerleave', soltar);
+    caja.addEventListener('pointercancel', soltar);
+    caja.addEventListener('pointerup', function (e) { if (e.pointerType !== 'mouse') soltar(); });
+    corte.addEventListener('keydown', function (e) {
+      var d = { ArrowLeft: -0.05, ArrowDown: -0.05, ArrowRight: 0.05, ArrowUp: 0.05 }[e.key];
+      if (!d) return;
+      e.preventDefault();
+      mano = Math.min(0.98, Math.max(0.02, meta + d));
+      pedir();
+    });
+    corte.addEventListener('blur', soltar);
+  })();
+
   /* ── Catálogo: cada fila cambia la imagen grande ── */
   (function () {
     var marco = $('#lineas-marco'), pie = $('#lineas-pie');
@@ -297,10 +439,7 @@
   $$('[data-rise]').forEach(function (el) { entrar(el, { opacity: 0, y: 26 }, { duration: 0.9 }); });
 
   /* Qué hace */
-  entrar('.intro__l1', { xPercent: -6, opacity: 0 }, { trigger: '.intro__title', duration: 1.1, start: 'top 80%' });
-  entrar('.intro__l2', { xPercent: 6, opacity: 0 }, { trigger: '.intro__title', duration: 1.1, delay: 0.08, start: 'top 80%' });
-  entrar('.intro__big img', { clipPath: 'inset(100% 0% 0% 0%)' }, { trigger: '.intro__big', duration: 1.3, start: 'top 80%' });
-  gsap.to('.intro__small', { yPercent: -18, ease: 'none', scrollTrigger: { trigger: '.intro__small', start: 'top bottom', end: 'bottom top', scrub: true } });
+  entrar('.angulos > div', { opacity: 0, y: 24 }, { trigger: '.angulos', duration: 0.8, stagger: 0.08, start: 'top 96%' });
 
   /* Medir */
   ScrollTrigger.matchMedia({
